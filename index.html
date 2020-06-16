@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>جدول امتحانات پایان ترم دانشگاه اصفهان ترم بهار ۹۹</title>
+    <title>جدول امتحانات پایان ترم دانشگاه اصفهان - بهار ۹۹</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -25,6 +25,9 @@
 </head>
 <body>
 <div class="container-fluid rtl text-center m-2" ng-app="tableApp" ng-controller="tableCtrl" dir="rtl">
+    <h2>
+        جدول امتحانات پایان ترم دانشگاه اصفهان - بهار ۹۹
+    </h2>
     <input class="mb-2 text-center w-25" ng-model="search" placeholder="جست و جو بر اساس هرچیزی...">
     <div class="mb-2 text-danger">
         <span class="col-12">این سامانه بر اساس اطلاعات منتشر شده تا ۲۷ خرداد ۱۳۹۸ایجاد شده است و مسئولیت بررسی صحت آن بر عهده فرد استفاده کننده می باشد.</span>
@@ -71,6 +74,9 @@
         </tr>
         </tbody>
     </table>
+    <div class="alert alert-secondary alert-dismissible" id="loadingAlert">
+        <strong>لطفا منتظر بمانید...</strong>
+    </div>
 </div>
 </body>
 <script>
@@ -79,9 +85,13 @@
         $scope.loaded = true;
 
         function loadDataFromJSON() {
+            $scope.loadingAlert = true
             $http.get("data.json").then(function (response) {
                 $scope.myData = response.data;
             });
+            setTimeout(function () {
+                $("#loadingAlert").hide();
+            }, 500);
         }
 
         loadDataFromJSON();
